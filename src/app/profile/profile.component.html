@@ -1,16 +1,16 @@
 <div class="container">
     <div class="page-header">
-      <h1>Manage Profile</h1>
+      <h1><a><img class="logo-img" src="../../assets/logo.png" /></a>Manage Profile</h1>
     </div>
-    <form class="form-inline" >
+    <form class="form-inline" #profileForm="ngForm">
       <p>
         Please define a display name before you can start chatting.
       </p>
       <div class="form-group">
-        <label class="" for="displayName">Display Name</label>
-        <input type="text" class="form-control" id="displayName" placeholder="Enter username" ng-model="profileCtrl.profile.displayName">
+        <label class="" for="displayName" name="displayName">Display Name</label>
+        <input type="text" class="form-control" [(ngModel)]="displayName" name="displayName" placeholder="Enter username">
       </div>
-      <button type="submit" class="btn btn-primary">Set Display Name</button>
+      <button type="submit" [disabled]="!displayName" class="btn btn-primary" (click)="updateUser()">Set Display Name</button>
     </form>
   
   </div>

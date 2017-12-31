@@ -21,10 +21,9 @@ export class RegisterComponent implements OnInit, OnChanges {
   register(registerForm: any) {
     const email = registerForm.email;
     const password = registerForm.password;
-    const displayName = registerForm.displayName;
-    console.log(email + password + displayName);
+    console.log(email + password);
     this.authService.registerUser(email, password)
-    .then(resolve => this.router.navigate(['home']))
+    .then(resolve => this.router.navigate(['editProfile']))
     .catch(error => this.errorMsg = error.message);  
   }
 

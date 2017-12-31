@@ -10,11 +10,13 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
+import { ProfileComponent } from './profile/profile.component';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AuthService } from "./services/auth.service";
+import { UserService } from "./services/user.service";
 import { environment } from '../environments/environment';
-import { ProfileComponent } from './profile/profile.component';
+
 
 @NgModule({
   declarations: [
@@ -33,7 +35,7 @@ import { ProfileComponent } from './profile/profile.component';
     AngularFireAuthModule,
     AngularFireModule.initializeApp(environment.firebase)
   ],
-  providers: [AuthService],
+  providers: [AuthService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
