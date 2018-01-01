@@ -9,13 +9,14 @@ import { ChannelService } from "../../services/channel.service";
 export class CreateChannelComponent implements OnInit {
 
   channelName: string;
-  constructor() { }
+  constructor(private channelService:ChannelService) { }
 
   ngOnInit() {
   }
 
   updateChannel() {
     console.log('Channel Name::: ' + this.channelName);
+    this.channelService.updateChannelName(this.channelName);
   }
 
 }

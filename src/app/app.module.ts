@@ -20,6 +20,7 @@ import { SidebarComponent } from './room/sidebar/sidebar.component';
 import { RoomComponent } from './room/room.component';
 import { ChannelsComponent } from './room/sidebar/channels/channels.component';
 import { CreateChannelComponent } from './room/create-channel/create-channel.component';
+import { ChannelService } from './services/channel.service';
 
 
 @NgModule({
@@ -43,7 +44,7 @@ import { CreateChannelComponent } from './room/create-channel/create-channel.com
     AngularFireAuthModule,
     AngularFireModule.initializeApp(environment.firebase)
   ],
-  providers: [AuthService, UserService],
+  providers: [AuthService, UserService, ChannelService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

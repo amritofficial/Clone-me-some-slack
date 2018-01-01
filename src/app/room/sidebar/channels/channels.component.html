@@ -5,14 +5,18 @@
     </div>
     <div class="channel-list">
       <div class="list-head">Channels</div>
+      <div class="channel" *ngFor="let channel of channels; let i = index" >
+          <a [ngClass]="{'selected': selectedIndex == i}" (click)="selectedItem(i)"># {{ channel.name }}</a>
+      </div>
+      <div class="channel create">
+          <a>+ create channel</a>
+      </div>
     </div>
     <div class="my-info">
       <img class="user-pic" src="../../assets/logo.png" />
       <div class="user-info">
-        <div class="user-name">
-          
+        <div class="user-name">  
         </div>
-
         <div class="options">
           <a ui-sref="profile">edit profile</a>
           /
