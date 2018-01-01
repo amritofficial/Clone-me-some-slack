@@ -1,16 +1,20 @@
 import { Injectable } from "@angular/core";
-import { Router, CanActivate } from "@angular/router";
+import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from "@angular/router";
 import * as firebase from 'firebase';
 import { AngularFireAuth } from "angularfire2/auth";
 import { AngularFireDatabase } from "angularfire2/database";
 import { Observable } from "rxjs/Observable";
 import { userModel } from "../models/user.model";
 
+import 'rxjs/add/operator/take';
+
 @Injectable()
 export class AuthService implements CanActivate{
     private user: Observable<firebase.User>; //this defines the standard firebase user object to fetch user info directly from Firebase
     authState: any; //this is to hold the user information when he/she registers or logs in
     private userData: userModel;
+
+    loggedin: boolean;
 
     constructor(public afAuth: AngularFireAuth, public db: AngularFireDatabase, public router: Router) {
         this.user = afAuth.authState;
@@ -65,5 +69,15 @@ export class AuthService implements CanActivate{
         }
         this.router.navigate(['/home']);
     }
+
+    // canActivate(): Promise<boolean> {
+    //     let self = this;
+    //      return this.afAuth.authState.toPromise().then(auth => {
+    //           if  (auth)  { this.loggedin = true; }
+    //           else { this.loggedin = false; }
+    //           self.router.navigate(['/home']);
+    //          return this.loggedin;
+    //      });
+    //  }
  
 }

@@ -1,0 +1,16 @@
+<div class="container" style="margin-left:300px;">
+  <div class="page-header">
+    <h1><a><img class="logo-img" src="../../assets/logo.png" /></a>Create Channel</h1>
+  </div>
+  <form class="form-inline" #profileForm="ngForm">
+    <p>
+     
+    </p>
+    <div class="form-group">
+      <label class="" for="displayName" name="displayName">Channel Name</label>
+      <input type="text" class="form-control" [(ngModel)]="channelName" name="displayName" placeholder="Enter username">
+    </div>
+    <button type="submit" [disabled]="!channelName" class="btn btn-primary" (click)="updateChannel()">Create Channel</button>
+  </form>
+
+</div>

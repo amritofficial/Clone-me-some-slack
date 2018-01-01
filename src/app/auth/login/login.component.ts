@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
     this.authService.loginUser(loginForm.email, loginForm.password)
     .then((resolve) => {
       console.log('Login Success');
-      this.router.navigate(['home']);
+      this.router.navigate(['chatRoom']);
     }).catch(error => console.log(error));
   }
 

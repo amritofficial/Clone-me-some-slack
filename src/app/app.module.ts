@@ -16,6 +16,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AuthService } from "./services/auth.service";
 import { UserService } from "./services/user.service";
 import { environment } from '../environments/environment';
+import { SidebarComponent } from './room/sidebar/sidebar.component';
+import { RoomComponent } from './room/room.component';
+import { ChannelsComponent } from './room/sidebar/channels/channels.component';
+import { CreateChannelComponent } from './room/create-channel/create-channel.component';
 
 
 @NgModule({
@@ -24,7 +28,11 @@ import { environment } from '../environments/environment';
     HomeComponent,
     LoginComponent,
     RegisterComponent,
-    ProfileComponent
+    ProfileComponent,
+    SidebarComponent,
+    RoomComponent,
+    ChannelsComponent,
+    CreateChannelComponent
   ],
   imports: [
     BrowserModule,
