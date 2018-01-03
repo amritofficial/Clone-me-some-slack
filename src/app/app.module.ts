@@ -23,6 +23,7 @@ import { ChannelsComponent } from './room/sidebar/channels/channels.component';
 import { CreateChannelComponent } from './room/create-channel/create-channel.component';
 import { ChannelService } from './services/channel.service';
 import { MessageComponent } from './room/message/message.component';
+import { MessageService } from './services/message.service';
 
 
 @NgModule({
@@ -47,7 +48,7 @@ import { MessageComponent } from './room/message/message.component';
     AngularFireAuthModule,
     AngularFireModule.initializeApp(environment.firebase)
   ],
-  providers: [AuthService, UserService, ChannelService],
+  providers: [AuthService, UserService, ChannelService, MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

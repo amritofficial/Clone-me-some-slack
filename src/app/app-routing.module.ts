@@ -17,7 +17,7 @@ export const appRoutes: Routes = [
     {path: 'editProfile', component: ProfileComponent, canActivate: [AuthService]},
     {path: 'login', component: LoginComponent},
     {path: 'register', component: RegisterComponent},
-    {path: 'chatRoom/channels', component: RoomComponent, canActivate: [AuthService],
+    {path: 'chatRoom/channels', component: RoomComponent,
         children: [
             {path: 'message/:cid', component: MessageComponent, outlet:'auxoutlet'},
             {path: 'create', component: CreateChannelComponent, outlet:'auxoutlet'}

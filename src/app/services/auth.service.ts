@@ -49,11 +49,11 @@ export class AuthService implements CanActivate{
             status: 'online'
         }
 
-        const data = {
-            email: email,
-            displayName: email,
-            status: 'Online'
-        }
+        // const data = {
+        //     email: email,
+        //     displayName: email,
+        //     status: 'Online'
+        // }
 
         this.db.object(path).update(this.userData)
         .catch(error => console.log('Error while updating: ' + error));

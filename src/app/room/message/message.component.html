@@ -1,18 +1,30 @@
-<div class="container" style="margin-left: 200px;">
+<div class="message-pane">
+  <div class="row">
 <div class="header">
-    <h1>Channel Name</h1>
+    <h1>My Channel</h1>
 </div>
   
   <div class="message-wrap">
     <img class="user-pic"/>
     <div class="message-info">
       <div class="user-name">
-        userName
-        <span class="timestamp">45454</span>
+        Sender
+        <span class="timestamp">Time</span>
       </div>
       <div class="message">
-        TEXT
+       Your Message Here
       </div>
     </div>
   </div>
+  
+  <form class="message-form" #messageForm="ngForm">
+    <div class="input-group">
+      <input type="text" class="form-control" name="message" [(ngModel)]="message" placeholder="Type a message...">
+      <span class="input-group-btn">
+        <button class="btn btn-default" (click)="sendMessage()" type="submit">Send</button>
+      </span>
+    </div>
+  
+  </form>
+</div>
 </div>

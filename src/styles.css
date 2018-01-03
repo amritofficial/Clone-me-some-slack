@@ -96,7 +96,7 @@ body {
   bottom:0;
   padding:15px;
   background:#3E313C;
-  width:19.5%;
+  width:18.8%;
 }
 
 .sidebar .my-info .user-pic {
@@ -147,7 +147,8 @@ body {
   display:inline-block;
   vertical-align: top;
   height:100%;
-  width:80%;
+  width:70%;
+  margin-left: 21%;
   overflow-y:scroll;
   padding:55px 15px 65px 15px;
 }
@@ -174,7 +175,7 @@ body {
   bottom:0;
   padding:0 15px 15px 0;
   background:#fff;
-  width:79%;
+  width:70%;
 }
 
 .message-pane .message-wrap {
