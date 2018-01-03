@@ -8,20 +8,27 @@ import { RouterModule } from "@angular/router";
 import { ProfileComponent } from "./profile/profile.component";
 import { AuthService } from "./services/auth.service";
 import { RoomComponent } from "./room/room.component";
+import { CreateChannelComponent } from "./room/create-channel/create-channel.component";
+import { MessageComponent } from "./room/message/message.component";
 
-const appRoutes: Routes = [
+export const appRoutes: Routes = [
     {path: '', redirectTo: '/home', pathMatch: 'full'},
     {path: 'home', component: HomeComponent},
     {path: 'editProfile', component: ProfileComponent, canActivate: [AuthService]},
     {path: 'login', component: LoginComponent},
     {path: 'register', component: RegisterComponent},
-    {path: 'chatRoom', component: RoomComponent, canActivate: [AuthService]}
+    {path: 'chatRoom/channels', component: RoomComponent, canActivate: [AuthService],
+        children: [
+            {path: 'message/:cid', component: MessageComponent, outlet:'auxoutlet'},
+            {path: 'create', component: CreateChannelComponent, outlet:'auxoutlet'}
+        ]
+    }
 ];
 
-@NgModule({
-    imports: [RouterModule.forRoot(appRoutes)],
-    exports: [RouterModule]
-})
-export class AppRoutingModule{
+// @NgModule({
+//     imports: [RouterModule.forRoot(appRoutes)],
+//     exports: [RouterModule]
+// })
+// export class AppRoutingModule{
 
-}
+// }

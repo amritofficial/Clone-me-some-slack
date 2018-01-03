@@ -6,10 +6,15 @@
     <div class="channel-list">
       <div class="list-head">Channels</div>
       <div class="channel" *ngFor="let channel of channels; let i = index" >
-          <a [ngClass]="{'selected': selectedIndex == i}" (click)="selectedItem(i)"># {{ channel.name }}</a>
+          <a 
+          [ngClass]="{'selected': selectedIndex == i}" 
+          name="{{channel.name}}" 
+          (click)="selectedItem(i, channel.channelId)"
+          [routerLink]="[{outlets: {'auxoutlet': ['message', channel.channelId]}}]"
+          ># {{ channel.name }}</a>
       </div>
       <div class="channel create">
-          <a>+ create channel</a>
+          <a [routerLink]="[{outlets: {'auxoutlet': ['create']}}]">+ create channel</a>
       </div>
     </div>
     <div class="my-info">
