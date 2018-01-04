@@ -18,8 +18,11 @@
       </div>
 
       <div class="list-head">Direct Messages</div>
-      <div class="channel" *ngFor="let user of users">
-        <a>
+      <div class="channel" *ngFor="let user of users; let i = index">
+        <a name="{{user.displayName}}"
+           (click)="selectedUserItem(i, user.uid)"
+           [routerLink]="[{outlets: {'auxoutlet': ['direct', authId, user.uid]}}]"
+           >
           <span class="presence" [ngClass]="{'online': user.status=='online'}"></span>
             {{ user.displayName }}
         </a>

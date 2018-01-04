@@ -10,6 +10,7 @@ import { AuthService } from "./services/auth.service";
 import { RoomComponent } from "./room/room.component";
 import { CreateChannelComponent } from "./room/create-channel/create-channel.component";
 import { MessageComponent } from "./room/message/message.component";
+import { DirectMessageComponent } from "./room/direct-message/direct-message.component";
 
 export const appRoutes: Routes = [
     {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -20,7 +21,8 @@ export const appRoutes: Routes = [
     {path: 'chatRoom/channels', component: RoomComponent,
         children: [
             {path: 'message/:cid', component: MessageComponent, outlet:'auxoutlet'},
-            {path: 'create', component: CreateChannelComponent, outlet:'auxoutlet'}
+            {path: 'create', component: CreateChannelComponent, outlet:'auxoutlet'},
+            {path: 'direct/:user1/:user2', component: DirectMessageComponent, outlet:'auxoutlet'}
         ]
     }
 ];

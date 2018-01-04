@@ -20,7 +20,8 @@ export class ChannelsComponent implements OnInit {
   channels: any[];
   data: any[];
   users: any[];
-  
+  authId: string; // It's the ID of the current logged in user
+
   constructor(public db: AngularFireDatabase, 
               public channelService: ChannelService, 
               public router: Router, 
@@ -30,14 +31,21 @@ export class ChannelsComponent implements OnInit {
     
   }
   selectedIndex: number;
+  selectedIndexUser: number;
 
   newMessage(channelId: any) {
     this.messageService.changeMessage(channelId)
   }
 
+  sendUser2Id(user2Id: any) {
+    this.messageService.getUser2Id(user2Id);
+  }
+
   ngOnInit() {
     this.displayData();
     this.getUsers();
+    this.authId = this.authService.currentUserId;
+    console.log('UserId1 ' + this.authId);
   }
 
   displayData() {
@@ -53,6 +61,12 @@ export class ChannelsComponent implements OnInit {
     console.log('ID: ' + channelId + " " +  this.channels[index].name);
     this.newMessage(this.channels[index].channelId);
     // this.getChannelId(this.channels[index].name);
+  }
+
+  selectedUserItem(index, user2Id: string): void {
+    this.selectedIndexUser = index;
+    console.log('UID: ' + user2Id + " " + this.users[index].uid);
+    this.sendUser2Id(user2Id);
   }
 
   getChannelId(channelName: string) { 
