@@ -14,7 +14,6 @@ export class MessageService {
     message: string;
     messages: AngularFireList<messageModel[]>;
 
-
     constructor(private afAuth: AngularFireAuth, private db: AngularFireDatabase, public activeRoute: ActivatedRoute) {
         this.afAuth.authState.subscribe(auth => {
             if(auth !== undefined && auth !== null) {
@@ -27,7 +26,7 @@ export class MessageService {
         
     // }
 
-    storeMessage(channelId: number, message:string){
+    storeMessage(channelId: any, message:string){
         console.log("Auth State " + this.authState.uid);
         this.getUserData().subscribe(data => {
             this.userData = data;
@@ -47,7 +46,7 @@ export class MessageService {
             }
 
             this.db.object(path).update(messageData)
-            .then(() => this.getMessages(this.channelId))
+            .then(() => console.log('Message Sent'))
             .catch(error => console.log("Error Message not sent " + error));
         }); 
     }
@@ -56,10 +55,5 @@ export class MessageService {
     getUserData() {
         const path = `/users/${this.authState.uid}`;
         return this.db.object(path).valueChanges();
-    }
-
-    getMessages(channelId: string) {
-        this.messages = this.db.list(`/${channelId}/channelMessages`);
-        console.log("Message Data " + this.messages[0].userName);
     }
 }

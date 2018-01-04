@@ -6,6 +6,7 @@ import { ChannelService } from "../../../services/channel.service";
 import { Observable } from 'rxjs/Observable';
 import { take } from 'rxjs/operators/take';
 import { MessageComponent } from '../../message/message.component';
+import { MessageService } from '../../../services/message.service';
 
 @Component({
   selector: 'app-channels',
@@ -15,7 +16,7 @@ import { MessageComponent } from '../../message/message.component';
 export class ChannelsComponent implements OnInit {
   channels: any[];
   data: any[];
-  constructor(public db: AngularFireDatabase, public channelService: ChannelService, public router: Router) { 
+  constructor(public db: AngularFireDatabase, public channelService: ChannelService, public router: Router, public messageService: MessageService) { 
     
   }
   selectedIndex: number;
