@@ -47,7 +47,7 @@ export class UserService implements OnInit{
             console.log("::::::: " + this.authState.uid + this.authState.email);
             this.db.object(`/users/${this.authState.uid}`)
             .set({uid: this.authState.uid, email:this.authState.email, displayName:dName, status:'online'})
-            .then(() => this.router.navigate(['chatRoom']))
+            .then(() => this.router.navigate(['chatRoom/channels']))
             .catch(error => console.log(error));
             }
             else {

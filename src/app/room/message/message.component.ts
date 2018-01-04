@@ -9,16 +9,24 @@ import { OnChanges } from '@angular/core';
   templateUrl: './message.component.html',
   styleUrls: ['./message.component.css']
 })
-export class MessageComponent implements OnInit, OnChanges {
+export class MessageComponent implements OnInit, OnChanges{
   message: string;
   channelId: any;
   messages: any;
   channelData: any;
   channelName: string;
-  constructor(private messageService: MessageService, private db: AngularFireDatabase, public activeRoute: ActivatedRoute) { }
+  test: string;
+  constructor(private messageService: MessageService, private db: AngularFireDatabase, public activeRoute: ActivatedRoute) { 
+    
+  }
 
   ngOnInit() {
-    this.getMessages();
+    this.messageService.currentChannelId.subscribe(data => {
+      this.channelId = data;
+      console.log("Behaviour: " + this.channelId);
+      this.getChannelName(this.channelId);
+      this.getMessages(this.channelId);
+    });
   }
 
   ngOnChanges() {
@@ -32,18 +40,22 @@ export class MessageComponent implements OnInit, OnChanges {
     this.messageService.storeMessage(this.channelId, this.message);
     this.message = '';
     console.log('ChannelId ' + this.channelId);
-    this.getMessages();
+    // this.getMessages();
   }
 
-  getMessages() {
-    this.db.list('/-L1xN4usuvDLVbz55GfM/channelMessages').valueChanges().subscribe(data => {
+  getMessages(channelId: any) {
+    console.log("From getMessages " + this.channelId);
+    const path = `/${channelId}/channelMessages`;
+    console.log('From getM ' + path);
+    this.db.list(path).valueChanges().subscribe(data => {
       this.messages = data;
       console.log(data);
     });
   }
 
   getChannelName(channelId: string) {
-    this.db.list(`/channels/${channelId}`).valueChanges()
+    const path = `/channels/${channelId}`;
+    this.db.object(path).valueChanges()
     .subscribe(data => {
       this.channelData = data;
       this.channelName = this.channelData.name;

@@ -21,6 +21,10 @@ export class ChannelsComponent implements OnInit {
   }
   selectedIndex: number;
 
+  newMessage(channelId: any) {
+    this.messageService.changeMessage(channelId)
+  }
+
   ngOnInit() {
     this.displayData();
   }
@@ -36,6 +40,7 @@ export class ChannelsComponent implements OnInit {
   selectedItem(index, channelId: any):void {
     this.selectedIndex = index;
     console.log('ID: ' + channelId + " " +  this.channels[index].name);
+    this.newMessage(this.channels[index].channelId);
     // this.getChannelId(this.channels[index].name);
   }
 

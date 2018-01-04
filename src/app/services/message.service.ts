@@ -5,6 +5,7 @@ import { ActivatedRoute } from "@angular/router";
 import * as firebase from 'firebase'; 
 import { messageModel } from "../models/message.model";
 import { userModel } from "../models/user.model";
+import { BehaviorSubject } from "rxjs/BehaviorSubject";
 
 @Injectable()
 export class MessageService {
@@ -13,6 +14,13 @@ export class MessageService {
     channelId: string;
     message: string;
     messages: AngularFireList<messageModel[]>;
+
+    private channelIdSource = new BehaviorSubject<string>("Defaultmessage");
+    currentChannelId = this.channelIdSource.asObservable();
+
+    changeMessage(channelId: any) {
+        this.channelIdSource.next(channelId);
+    }
 
     constructor(private afAuth: AngularFireAuth, private db: AngularFireDatabase, public activeRoute: ActivatedRoute) {
         this.afAuth.authState.subscribe(auth => {
