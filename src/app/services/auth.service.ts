@@ -13,6 +13,7 @@ export class AuthService implements CanActivate{
     private user: Observable<firebase.User>; //this defines the standard firebase user object to fetch user info directly from Firebase
     authState: any; //this is to hold the user information when he/she registers or logs in
     private userData: userModel;
+    status: string = 'online';
 
     loggedin: boolean;
 
@@ -34,6 +35,8 @@ export class AuthService implements CanActivate{
         return this.afAuth.auth.signInWithEmailAndPassword(email, password)
         .then((User) => {
             this.authState = User;
+            this.status = 'online';
+            this.setUserStatus(this.status);
             console.log('Loggedin service Successful!');
         });
     }
@@ -79,5 +82,28 @@ export class AuthService implements CanActivate{
     //          return this.loggedin;
     //      });
     //  }
+
+    setUserStatus(status: string) {
+        const path = `users/${this.currentUserId}`;
+        const data = {
+            status: status
+        }
+
+        this.db.object(path).update(data)
+        .then(() => console.log('Youre Online!'))
+        .catch(error => console.log(error));
+    }
+
+    logout() {
+        const path = `users/${this.currentUserId}`;
+        const data = {
+            status: 'offline'
+        }
+        this.db.object(path).update(data)
+        .then(() => console.log('You Logged Out'))
+        .catch(error => console.log(error));
+        this.afAuth.auth.signOut();
+        this.router.navigate(['home']);
+    }
  
 }

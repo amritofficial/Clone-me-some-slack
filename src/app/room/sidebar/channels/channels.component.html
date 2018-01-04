@@ -16,6 +16,14 @@
       <div class="channel create">
           <a [routerLink]="[{outlets: {'auxoutlet': ['create']}}]">+ create channel</a>
       </div>
+
+      <div class="list-head">Direct Messages</div>
+      <div class="channel" *ngFor="let user of users">
+        <a>
+          <span class="presence" [ngClass]="{'online': user.status=='online'}"></span>
+            {{ user.displayName }}
+        </a>
+      </div>
     </div>
     <div class="my-info">
       <img class="user-pic" src="../../assets/logo.png" />
@@ -25,7 +33,7 @@
         <div class="options">
           <a ui-sref="profile">edit profile</a>
           /
-          <a href="#">logout</a>
+          <a (click)="logoutUser()">logout</a>
         </div>
       </div>
     </div>

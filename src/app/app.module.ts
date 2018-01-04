@@ -24,6 +24,7 @@ import { CreateChannelComponent } from './room/create-channel/create-channel.com
 import { ChannelService } from './services/channel.service';
 import { MessageComponent } from './room/message/message.component';
 import { MessageService } from './services/message.service';
+import { DirectMessageComponent } from './room/direct-message/direct-message.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { MessageService } from './services/message.service';
     RoomComponent,
     ChannelsComponent,
     CreateChannelComponent,
-    MessageComponent
+    MessageComponent,
+    DirectMessageComponent
   ],
   imports: [
     BrowserModule,

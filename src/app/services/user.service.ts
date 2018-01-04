@@ -21,6 +21,10 @@ export class UserService implements OnInit{
     //     return this.afDatabase.object(`users/${this.authService.currentUserId}`);
     // }
 
+    getAllUsers() {
+        return this.db.list('/users').valueChanges();
+    }
+
     ngOnInit() {
         this.userData = this.db.list('/users/0FkH93j0rSV5PvbXw2Vc7EHzxgx1');
         console.log()

@@ -7,6 +7,9 @@ import { Observable } from 'rxjs/Observable';
 import { take } from 'rxjs/operators/take';
 import { MessageComponent } from '../../message/message.component';
 import { MessageService } from '../../../services/message.service';
+import { AuthService } from '../../../services/auth.service';
+import { UserService } from '../../../services/user.service';
+import { userModel } from "../../../models/user.model";
 
 @Component({
   selector: 'app-channels',
@@ -16,7 +19,14 @@ import { MessageService } from '../../../services/message.service';
 export class ChannelsComponent implements OnInit {
   channels: any[];
   data: any[];
-  constructor(public db: AngularFireDatabase, public channelService: ChannelService, public router: Router, public messageService: MessageService) { 
+  users: any[];
+  
+  constructor(public db: AngularFireDatabase, 
+              public channelService: ChannelService, 
+              public router: Router, 
+              public messageService: MessageService,
+              private authService: AuthService,
+              private userService: UserService) { 
     
   }
   selectedIndex: number;
@@ -27,6 +37,7 @@ export class ChannelsComponent implements OnInit {
 
   ngOnInit() {
     this.displayData();
+    this.getUsers();
   }
 
   displayData() {
@@ -50,10 +61,21 @@ export class ChannelsComponent implements OnInit {
     console.log('Channel Id ' + data.channelId);
   }
   
-  routeMe() {  
+  // routeMe() {  
     // this.router.navigate(['/chatRoom/channel/message', {outlets: {'auxchild': [MessageComponent]}}]);
     // This works
     // this.router.navigate(['/chatRoom/channel/message']);
+  // }
+
+  getUsers() {
+    this.userService.getAllUsers().subscribe((users) => {
+      this.users = users;
+      console.log(this.users[0].displayName);
+    });
+  }
+
+  logoutUser() {
+    this.authService.logout();
   }
 
 }

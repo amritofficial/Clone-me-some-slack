@@ -1,11 +1,12 @@
 import { Injectable } from "@angular/core";
+import { Router } from "@angular/router";
 import { AngularFireAuth } from "angularfire2/auth";
 import { AngularFireDatabase } from "angularfire2/database";
 import * as firebase from 'firebase';
 
 @Injectable()
 export class ChannelService {
-    constructor(public afAuth: AngularFireAuth, public db: AngularFireDatabase) {}
+    constructor(public afAuth: AngularFireAuth, public db: AngularFireDatabase, public router: Router) {}
 
     updateChannelName(channelName: string) {
         this.afAuth.authState.subscribe(auth => {
