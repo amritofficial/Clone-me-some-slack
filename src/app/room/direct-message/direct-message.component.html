@@ -1,18 +1,18 @@
 <div class="message-pane">
     <div class="row">
   <div class="header">
-      <h1>User Name</h1>
+      <h1>{{ receiverName }}</h1>
   </div>
     
-    <div class="message-wrap" *ngFor="let message of messages">
+    <div class="message-wrap" *ngFor="let message of messageDisplayData">
       <img class="user-pic"/>
       <div class="message-info">
         <div class="user-name">
-          MyName
-          <span class="timestamp">76767</span>
+          {{ message.userName }}
+          <span class="timestamp">{{ message.timeSent }}</span>
         </div>
         <div class="message">
-         Hello World
+         {{ message.message }}
         </div>
       </div>
     </div>

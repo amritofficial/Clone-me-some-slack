@@ -14,9 +14,10 @@ export class MessageService {
     channelId: string;
     message: string;
     messages: AngularFireList<messageModel[]>;
+    messagePath: string;
 
     // The use of Behaiviour subject is to get data from Sibling to a Sibling
-    private channelIdSource = new BehaviorSubject<string>("Defaultmessage");
+    private channelIdSource = new BehaviorSubject<string>("");
     currentChannelId = this.channelIdSource.asObservable();
 
     changeMessage(channelId: any) {
@@ -67,7 +68,7 @@ export class MessageService {
     }
 
     // Below are the functions representing the direct message working
-    private user2IdSource = new BehaviorSubject<string>("Defaultmessage");
+    private user2IdSource = new BehaviorSubject<string>("");
     currentUser2Id = this.user2IdSource.asObservable();
     
     getUser2Id(user2Id: any) {
@@ -75,20 +76,66 @@ export class MessageService {
     }
 
     storeDirectMessage(user2Id: any, message: string) {
-        var path1 = 'userMessages/' + this.authState.uid < user2Id ? this.authState.uid+'/'+user2Id : user2Id+'/'+this.authState.uid;
-        console.log('Direct Message from a service ' + message);
+        this.afAuth.authState.subscribe(users => {
+            // var newPostKey = firebase.database().ref().child('userMessages').push().key;
+            const timeStamp:any = firebase.database.ServerValue.TIMESTAMP;
+           
+            let path: string = this.getPath(this.authState.uid, user2Id);
+            console.log('This is the path ' + path);
+
+            
+            
+            this.getUserData().subscribe(userData => {
+                this.userData = userData;
+                console.log('The user display name ' + this.userData.displayName);
+
+                // let data = {
+                //     uid: this.authState.uid,
+                //     displayName: this.userData.displayName,
+                //     message: message,
+                //     timeStamp: timeStamp
+                // }
+
+                let messageData: messageModel = {
+                    messageId: '',
+                    uid: this.authState.uid,
+                    userName: this.userData.displayName,
+                    message: message,
+                    timeSent: timeStamp
+                }
+
+                this.db.object(path).update(messageData)
+                .then(() => console.log('Direct Message Sent!'))
+                .catch((error) => console.log(error));
+                console.log('Direct Message from a service ' + message);
+            });
+            
+        }); 
+    }
+
+    // This method finds a difference between two ids and builds a path off of the ids
+    // provided by the method that would store data into the database and build the node using
+    // this path
+    getPath(user1Id: any, user2Id: any) {
+        let path;
         var newPostKey = firebase.database().ref().child('userMessages').push().key;
-        // const path = `userMessages/${this.authState.uid}/${user2Id}/${newPostKey}`;
-        const timeStamp:any = firebase.database.ServerValue.TIMESTAMP
 
-        let data = {
-            uid: this.authState.uid,
-            message: message,
-            timeStamp: timeStamp
-        }
-
-        this.db.object(path1).update(data)
-        .then(() => console.log('Direct Message Sent!'))
-        .catch((error) => console.log(error));
+            const timeStamp:any = firebase.database.ServerValue.TIMESTAMP
+           
+            if(user1Id < user2Id) {
+                console.log('User2Id is greater');
+                path = 'userMessages/'+user2Id + '/' + user1Id + '/' + newPostKey;
+                return path;
+            }
+            else if(user1Id > user2Id) {
+                console.log('this.authstate.uid is greater');
+                path = 'userMessages/' + user1Id + '/' + user2Id + '/' + newPostKey;
+                return path;
+            }
+            else if(user1Id === user2Id) {
+                // console.log('They both are equal');
+                path = 'userMessages/' + user1Id + '/' + user2Id + '/' + newPostKey;
+                return path;
+            }
     }
 }

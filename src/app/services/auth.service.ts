@@ -7,9 +7,10 @@ import { Observable } from "rxjs/Observable";
 import { userModel } from "../models/user.model";
 
 import 'rxjs/add/operator/take';
+import { OnDestroy } from "@angular/core";
 
 @Injectable()
-export class AuthService implements CanActivate{
+export class AuthService implements CanActivate, OnDestroy{
     private user: Observable<firebase.User>; //this defines the standard firebase user object to fetch user info directly from Firebase
     authState: any; //this is to hold the user information when he/she registers or logs in
     private userData: userModel;
@@ -19,6 +20,10 @@ export class AuthService implements CanActivate{
 
     constructor(public afAuth: AngularFireAuth, public db: AngularFireDatabase, public router: Router) {
         this.user = afAuth.authState;
+
+        this.afAuth.authState.subscribe(auth => {
+            this.authState = auth;
+        });
     }
 
     registerUser(email:string, password: string) {
@@ -66,12 +71,22 @@ export class AuthService implements CanActivate{
        return this.authState !== null ? this.authState.uid : '';
     }
 
-    canActivate() {
-        if(this.authState){
+    // canActivate() {
+    //     if(this.authState){
+    //         return true;
+    //     }
+    //     this.router.navigate(['/home']);
+    // }
+
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+        return this.afAuth.authState.map((auth) => {
+            if (!auth) {
+              this.router.navigateByUrl('login');
+              return false;
+            }
             return true;
-        }
-        this.router.navigate(['/home']);
-    }
+        }).take(1);
+      }
 
     // canActivate(): Promise<boolean> {
     //     let self = this;
@@ -104,6 +119,10 @@ export class AuthService implements CanActivate{
         .catch(error => console.log(error));
         this.afAuth.auth.signOut();
         this.router.navigate(['home']);
+    }
+
+    ngOnDestroy() {
+        this.logout();
     }
  
 }

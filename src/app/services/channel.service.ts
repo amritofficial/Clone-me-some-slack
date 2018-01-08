@@ -10,11 +10,8 @@ export class ChannelService {
 
     updateChannelName(channelName: string) {
         this.afAuth.authState.subscribe(auth => {
-            const items = this.db.list('channels');
             var newPostKey = firebase.database().ref().child('channels').push().key;
-
             let path = `/channels/${newPostKey}`;
-
             let channelData = {
                 channelId: newPostKey,
                 name: channelName

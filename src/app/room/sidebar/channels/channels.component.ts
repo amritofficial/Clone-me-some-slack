@@ -10,13 +10,14 @@ import { MessageService } from '../../../services/message.service';
 import { AuthService } from '../../../services/auth.service';
 import { UserService } from '../../../services/user.service';
 import { userModel } from "../../../models/user.model";
+import { OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'app-channels',
   templateUrl: './channels.component.html',
   styleUrls: ['./channels.component.css']
 })
-export class ChannelsComponent implements OnInit {
+export class ChannelsComponent implements OnInit, OnDestroy{
   channels: any[];
   data: any[];
   users: any[];
@@ -33,6 +34,8 @@ export class ChannelsComponent implements OnInit {
   selectedIndex: number;
   selectedIndexUser: number;
 
+  subscribedAuth: any;
+
   newMessage(channelId: any) {
     this.messageService.changeMessage(channelId)
   }
@@ -44,7 +47,12 @@ export class ChannelsComponent implements OnInit {
   ngOnInit() {
     this.displayData();
     this.getUsers();
-    this.authId = this.authService.currentUserId;
+    this.subscribedAuth = this.authService.afAuth.authState.subscribe(auth => {
+      this.authId = auth.uid;
+      console.log('Subscribed Auth Uid' + this.authId);
+      this.subscribedAuth.unsubscribe();
+    });
+    //this.authId = this.authService.currentUserId;
     console.log('UserId1 ' + this.authId);
   }
 
@@ -91,5 +99,10 @@ export class ChannelsComponent implements OnInit {
   logoutUser() {
     this.authService.logout();
   }
+
+  ngOnDestroy() {
+    this.subscribedAuth.unsubscribe();
+  }
+  
 
 }
