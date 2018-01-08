@@ -1,0 +1,45 @@
+<div class="main">
+  <div class="sidebar">
+    <div class="slack-name">
+      <h2>MySlack</h2>
+    </div>
+    <div class="channel-list">
+      <div class="list-head">Channels</div>
+      <div class="channel" *ngFor="let channel of channels; let i = index" >
+          <a 
+          [ngClass]="{'selected': selectedIndex == i}" 
+          name="{{channel.name}}" 
+          (click)="selectedItem(i, channel.channelId)"
+          [routerLink]="[{outlets: {'auxoutlet': ['message', channel.channelId]}}]"
+          ># {{ channel.name }}</a>
+      </div>
+      <div class="channel create">
+          <a [routerLink]="[{outlets: {'auxoutlet': ['create']}}]">+ create channel</a>
+      </div>
+
+      <div class="list-head">Direct Messages</div>
+      <div class="channel" *ngFor="let user of users; let i = index">
+        <a name="{{user.displayName}}"
+           (click)="selectedUserItem(i, user.uid)"
+           [routerLink]="[{outlets: {'auxoutlet': ['direct', authId, user.uid]}}]"
+           >
+          <span class="presence" [ngClass]="{'online': user.status=='online'}"></span>
+            {{ user.displayName }}
+        </a>
+      </div>
+    </div>
+    <div class="my-info">
+      <img class="user-pic" src="../../assets/logo.png" />
+      <div class="user-info">
+        <div class="user-name">  
+        </div>
+        <div class="options">
+          <a ui-sref="profile">edit profile</a>
+          /
+          <a (click)="logoutUser()">logout</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

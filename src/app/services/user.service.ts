@@ -1,4 +1,5 @@
 import { Injectable, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 import * as firebase from "firebase";
 import { AngularFireDatabase } from "angularfire2/database";
 import { Observable } from "rxjs";
@@ -11,7 +12,7 @@ import { AngularFireAuth } from "angularfire2/auth";
 export class UserService implements OnInit{
     public authState: any;
     userData: AngularFireList<any[]>;
-    constructor(public db:AngularFireDatabase, public authService: AuthService, public afAuth: AngularFireAuth) {
+    constructor(public db:AngularFireDatabase, public authService: AuthService, public afAuth: AngularFireAuth, public router: Router) {
         this.authState = this.afAuth.authState;
         
     }
@@ -19,6 +20,10 @@ export class UserService implements OnInit{
     // getAllUsers(){
     //     return this.afDatabase.object(`users/${this.authService.currentUserId}`);
     // }
+
+    getAllUsers() {
+        return this.db.list('/users').valueChanges();
+    }
 
     ngOnInit() {
         this.userData = this.db.list('/users/0FkH93j0rSV5PvbXw2Vc7EHzxgx1');
@@ -46,7 +51,7 @@ export class UserService implements OnInit{
             console.log("::::::: " + this.authState.uid + this.authState.email);
             this.db.object(`/users/${this.authState.uid}`)
             .set({uid: this.authState.uid, email:this.authState.email, displayName:dName, status:'online'})
-            .then(() => console.log("Display Name Updated Successfully"))
+            .then(() => this.router.navigate(['chatRoom/channels']))
             .catch(error => console.log(error));
             }
             else {
