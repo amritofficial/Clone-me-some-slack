@@ -1,5 +1,8 @@
 # SlackClone
+The project is based off a Real Slack application and has the same abilities as Slack. The user can create channels and join a channel to walk through discussions and contribute to it. Besides that, the applicaiton also provides user to user communication which works same as a chat application and allows user to talk to an individual user other than being in a channel. 
 
+# Technologies
+The application makes use of Angular 5, Firebase, AngularFire2, OAuth, NPM and other Front-End technologies including HTML5 and CSS3.
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.2.
 
 ## Development server
